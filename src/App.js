@@ -1,13 +1,21 @@
 import "./App.css";
 import Header from "./Components/Header";
-import { Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import Contacts from "./Components/Contacts";
+import { AppContainer, Body } from "./AppStyledComponents";
+import ContactDetails from "./Components/ContactDetails";
 
 function App() {
   return (
-    <div className="App">
+    <AppContainer>
       <Header />
-      <Routes></Routes>
-    </div>
+      <Body>
+        <Routes>
+          <Route path="/" element={<Contacts />} />
+          <Route path="/:id" element={<ContactDetails />} />
+        </Routes>
+      </Body>
+    </AppContainer>
   );
 }
 

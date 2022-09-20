@@ -4,12 +4,6 @@
   box-sizing: border-box;
 }
 
-a {
-  font-family: "Inter", sans-serif;
-  text-decoration: none;
-  color: #6edefc;
-  font-weight: 600;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.icon {
+  font-size: 10px;
 }
