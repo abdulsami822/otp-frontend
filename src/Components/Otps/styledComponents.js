@@ -40,6 +40,7 @@ export const Styles = styled.div`
     border-spacing: 0;
     border: 1px solid var(--primary-color);
     width: 100%;
+    text-align: center;
 
     tr {
       :last-child {

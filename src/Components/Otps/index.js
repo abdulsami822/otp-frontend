@@ -33,7 +33,13 @@ export default function Otps() {
       //format keys into camelCase from snake_case
       const otps = responseOtps.map((otpData) => {
         const { first_name, last_name, id, time, otp } = otpData;
-        return { id, firstName: first_name, lastName: last_name, time, otp };
+        return {
+          id,
+          firstName: first_name,
+          lastName: last_name,
+          time: new Date(time).toUTCString(),
+          otp,
+        };
       });
 
       setState({
