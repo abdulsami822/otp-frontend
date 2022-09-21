@@ -13,6 +13,7 @@ import {
 } from "./styledComponents";
 
 export default function ContactDetails() {
+  //state
   const [state, setState] = useState({
     contact: {},
     isError: false,
@@ -30,27 +31,32 @@ export default function ContactDetails() {
   const getContact = async () => {
     try {
       const { id } = params;
-      const url = `https://meragaonotp.herokuapp.com/contact/${id}`;
+      const url = `http://localhost:4000/contact/${id}`;
       const response = await fetch(url);
       const data = await response.json();
+
+      //format keys into camelCase from snake_case
       const formattedData = {
-        //format keys into camelCase from snake_case
         id: data.id,
         firstName: data.first_name,
         lastName: data.last_name,
         phone: data.phone,
       };
+
       setState({ ...state, contact: formattedData, isLoading: false });
     } catch (error) {
+      //handling unexpected error
       setState({ ...state, isLoading: false, isError: true });
     }
   };
 
+  //look for Error in API Call and return JSX Accordingly
   const renderContent = () => {
     const { isError } = state;
     return isError ? <Error /> : renderContact();
   };
 
+  //render contact data's individual key-value pair
   const renderContactInfo = (title, value) => {
     return (
       <ContactInfoDiv>
@@ -60,6 +66,7 @@ export default function ContactDetails() {
     );
   };
 
+  //render contact complete information
   const renderContact = () => {
     const { contact } = state;
     const { id, firstName, lastName, phone } = contact;
@@ -73,6 +80,7 @@ export default function ContactDetails() {
       </ContactDiv>
     );
   };
+
   //returns total JSX combined
   const render = () => {
     const { isLoading } = state;

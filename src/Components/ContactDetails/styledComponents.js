@@ -10,7 +10,7 @@ export const ContainerDiv = styled.div`
 `;
 
 export const ContactDiv = styled.div`
-  height: 350px;
+  height: 300px;
   width: 400px;
   box-shadow: 0 0 8px #888;
   border: none;
@@ -35,7 +35,7 @@ export const Heading = styled.h1`
 `;
 
 export const ContactInfo = styled.p`
-  font-size: 18px;
+  font-size: 15px;
   font-family: Inter;
   margin: 3px;
   color: var(--secondary-color);
@@ -54,7 +54,7 @@ export const Button = styled(Link)`
   border: none;
   border-radius: 5px;
   font-family: Inter;
-  font-size: 14x;
+  font-size: 14px;
   cursor: pointer;
   text-decoration: none;
   display: flex;

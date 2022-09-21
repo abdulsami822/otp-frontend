@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
-import CloseIcon from "@mui/icons-material/Close";
+import { SearchInput } from "../SearchInput";
+import Error from "../Error";
+import Loader from "../Loader";
 import {
   ContainerDiv,
   ContactDiv,
@@ -9,12 +10,8 @@ import {
   ContactLinkDiv,
   Button,
   ContactHeader,
-  Input,
-  InputContainer,
   MessageIcon,
 } from "./styledComponents";
-import Error from "../Error";
-import Loader from "../Loader";
 
 export default function Contacts() {
   const [state, setState] = useState({
@@ -32,7 +29,7 @@ export default function Contacts() {
   //fetch contacts and update state
   const getContacts = async () => {
     try {
-      const url = "https://meragaonotp.herokuapp.com/contacts";
+      const url = "http://localhost:4000/contacts";
       const response = await fetch(url);
 
       const reponseContacts = await response.json();
@@ -48,7 +45,6 @@ export default function Contacts() {
         filteredContacts: contacts,
       });
     } catch (error) {
-      console.log(error.message);
       setState({
         ...state,
         isLoading: false,
@@ -82,17 +78,11 @@ export default function Contacts() {
   const renderSearch = () => {
     const { searchValue } = state;
     return (
-      <InputContainer>
-        <Input value={searchValue} onChange={searchData} />
-        {searchValue.length === 0 ? (
-          <SearchIcon />
-        ) : (
-          <CloseIcon onClick={clearInput} />
-        )}
-      </InputContainer>
+      <SearchInput value={searchValue} change={searchData} clear={clearInput} />
     );
   };
 
+  //look for Error in API Call and return JSX Accordingly
   const renderContent = () => {
     const { isError } = state;
     return isError ? <Error /> : renderContactList();

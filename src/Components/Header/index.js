@@ -6,8 +6,8 @@ export const Header = () => (
       <Image src="/logo.png" alt="logo" />
     </NavbarLink>
     <Navbar>
-      <NavbarLink to="/">Send OTP</NavbarLink>
-      <NavbarLink to="/view-otp">View OTP</NavbarLink>
+      <NavbarLink to="/">Contacts</NavbarLink>
+      <NavbarLink to="/otps">OTPs</NavbarLink>
     </Navbar>
   </HeaderContainer>
 );
