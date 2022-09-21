@@ -2,8 +2,8 @@ import { HeaderContainer, Image, Navbar, NavbarLink } from "./styledComponents";
 
 export const Header = () => (
   <HeaderContainer>
-    <NavbarLink>
-      <Image src="/logo192.png" alt="logo" />
+    <NavbarLink to="/">
+      <Image src="/logo.png" alt="logo" />
     </NavbarLink>
     <Navbar>
       <NavbarLink to="/">Send OTP</NavbarLink>

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import SendIcon from "@mui/icons-material/Send";
 
 export const ContainerDiv = styled.div`
   min-height: 80%;
@@ -38,7 +39,7 @@ export const ContactHeader = styled.div`
 `;
 
 export const Heading = styled.h1`
-  color: var(--primary-color);
+  color: ${(props) => (props.color ? props.color : "var(--primary-color)")};
 `;
 
 export const InputContainer = styled.div`
@@ -69,6 +70,10 @@ export const Button = styled(Link)`
   font-size: 11px;
   text-decoration: none;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+`;
+
+export const MessageIcon = styled(SendIcon)`
+  font-size: 11px !important;
 `;

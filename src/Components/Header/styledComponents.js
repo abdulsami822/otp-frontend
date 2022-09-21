@@ -13,7 +13,7 @@ export const HeaderContainer = styled.div`
 `;
 
 export const Image = styled.img`
-  height: 40px;
+  max-height: 70px;
 `;
 
 export const Navbar = styled.nav`
@@ -26,7 +26,7 @@ export const Navbar = styled.nav`
 export const NavbarLink = styled(Link)`
   font-family: "Inter", sans-serif;
   text-decoration: none;
-  color: #6edefc;
+  color: var(--primary-color);
   font-weight: 600;
   display: flex;
   justify-content: center;

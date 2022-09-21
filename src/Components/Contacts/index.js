@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { LineWave } from "react-loader-spinner";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import {
@@ -12,13 +11,18 @@ import {
   ContactHeader,
   Input,
   InputContainer,
+  MessageIcon,
 } from "./styledComponents";
+import Error from "../Error";
+import Loader from "../Loader";
 
 export default function Contacts() {
   const [state, setState] = useState({
     contacts: [],
     filteredContacts: [],
     searchValue: "",
+    isError: false,
+    isLoading: true,
   });
 
   useEffect(() => {
@@ -27,19 +31,34 @@ export default function Contacts() {
 
   //fetch contacts and update state
   const getContacts = async () => {
-    const url = "https://meragaonotp.herokuapp.com/contacts";
-    const response = await fetch(url);
-    if (response.ok === true) {
+    try {
+      const url = "https://meragaonotp.herokuapp.com/contacts";
+      const response = await fetch(url);
+
       const reponseContacts = await response.json();
-      //change name case
+      //format keys into camelCase from snake_case
       const contacts = reponseContacts.map((contact) => {
         const { first_name, last_name, id, phone } = contact;
         return { firstName: first_name, lastName: last_name, id, phone };
       });
-      setState({ ...state, contacts, filteredContacts: contacts });
+      setState({
+        ...state,
+        isLoading: false,
+        contacts,
+        filteredContacts: contacts,
+      });
+    } catch (error) {
+      console.log(error.message);
+      setState({
+        ...state,
+        isLoading: false,
+        isError: true,
+        errorMessage: error.message,
+      });
     }
   };
 
+  //filter contact list according to search input
   const searchData = (event) => {
     const inputValue = event.target.value;
 
@@ -53,11 +72,13 @@ export default function Contacts() {
     setState({ ...state, searchValue: inputValue, filteredContacts });
   };
 
+  //clear input field
   const clearInput = () => {
     const { contacts } = state;
     setState({ ...state, searchValue: "", filteredContacts: contacts });
   };
 
+  //returns JSX for search input
   const renderSearch = () => {
     const { searchValue } = state;
     return (
@@ -72,6 +93,12 @@ export default function Contacts() {
     );
   };
 
+  const renderContent = () => {
+    const { isError } = state;
+    return isError ? <Error /> : renderContactList();
+  };
+
+  //returns JSX for contact list
   const renderContactList = () => {
     const { filteredContacts } = state;
     return (
@@ -85,7 +112,10 @@ export default function Contacts() {
           return (
             <ContactLinkDiv key={id}>
               <ContactName>{`${id}. ${firstName} ${lastName}`}</ContactName>
-              <Button to={`/${id}`}>Send</Button>
+              <Button to={`/contact/${id}`}>
+                Send
+                <MessageIcon />
+              </Button>
             </ContactLinkDiv>
           );
         })}
@@ -93,18 +123,13 @@ export default function Contacts() {
     );
   };
 
-  const renderLoader = () => {
-    return <LineWave />;
-  };
-
-  const blender = () => {
-    const { contacts } = state;
+  //returns total JSX combined
+  const render = () => {
+    const { isLoading } = state;
     return (
-      <ContainerDiv>
-        {contacts.length === 0 ? renderLoader() : renderContactList()}
-      </ContainerDiv>
+      <ContainerDiv>{isLoading ? <Loader /> : renderContent()}</ContainerDiv>
     );
   };
 
-  return blender();
+  return render();
 }
