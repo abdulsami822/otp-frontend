@@ -6,6 +6,7 @@ import { AppContainer, Body } from "./AppStyledComponents";
 import ContactDetails from "./Components/ContactDetails";
 import Message from "./Components/Message";
 import Otps from "./Components/Otps";
+import NotFound from "./Components/NotFound";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Header />
       <Body>
         <Routes>
+          <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Contacts />} />
           <Route path="/contact/:id" element={<ContactDetails />} />
           <Route path="/message/:id" element={<Message />} />
