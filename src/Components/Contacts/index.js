@@ -12,6 +12,7 @@ import {
   ContactHeader,
   MessageIcon,
 } from "./styledComponents";
+import NoResults from "../NoResults";
 
 export default function Contacts() {
   const [state, setState] = useState({
@@ -82,21 +83,10 @@ export default function Contacts() {
     );
   };
 
-  //look for Error in API Call and return JSX Accordingly
-  const renderContent = () => {
-    const { isError } = state;
-    return isError ? <Error /> : renderContactList();
-  };
-
-  //returns JSX for contact list
-  const renderContactList = () => {
+  const renderContactsList = () => {
     const { filteredContacts } = state;
     return (
-      <ContactDiv>
-        <ContactHeader>
-          <Heading>Contacts</Heading>
-          {renderSearch()}
-        </ContactHeader>
+      <>
         {filteredContacts.map((contact) => {
           const { id, firstName, lastName } = contact;
           return (
@@ -109,8 +99,28 @@ export default function Contacts() {
             </ContactLinkDiv>
           );
         })}
+      </>
+    );
+  };
+
+  //returns JSX for contact list
+  const renderContacts = () => {
+    const { filteredContacts } = state;
+    return (
+      <ContactDiv>
+        <ContactHeader>
+          <Heading>Contacts</Heading>
+          {renderSearch()}
+        </ContactHeader>
+        {filteredContacts.length === 0 ? <NoResults /> : renderContactsList()}
       </ContactDiv>
     );
+  };
+
+  //look for Error in API Call and return JSX Accordingly
+  const renderContent = () => {
+    const { isError } = state;
+    return isError ? <Error /> : renderContacts();
   };
 
   //returns total JSX combined

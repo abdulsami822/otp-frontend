@@ -9,6 +9,7 @@ import {
 import { Table } from "./Table";
 import Error from "../Error";
 import { SearchInput } from "../SearchInput";
+import NoResults from "../NoResults";
 
 export default function Otps() {
   const [state, setState] = useState({
@@ -103,7 +104,11 @@ export default function Otps() {
     return (
       <OtpContent>
         {renderHeader()}
-        <Table columns={columns} data={filteredOtps} />
+        {filteredOtps.length === 0 ? (
+          <NoResults />
+        ) : (
+          <Table columns={columns} data={filteredOtps} />
+        )}
       </OtpContent>
     );
   };
